@@ -1,0 +1,49 @@
+### Executed with REST Client Extension for VS Code or can be executed with cURL manually
+
+@hostname = localhost
+@port = 8080
+@host = {{hostname}}:{{port}}
+
+### Load documents into "movies" collection
+POST http://{{host}}/insertData
+
+### Get all documents
+curl -X GET http://{{host}}/movies/all
+
+### Delete all documents in "movies" collection
+curl -X DELETE http://{{host}}/movies/all 
+
+
+
+###  Add "The Matrix" into movies collection
+curl -X POST http://{{host}}/movies/addByTitle \
+    -H 'Content-Type: application/json' \
+    -d '{
+        "title": "The Matrix",
+        "director": "Wachowski Brothers",
+        "year": 1999,
+        "rated": "R",
+        "released": "31 Mar 1999"
+    }'
+
+### Update the fields in the movie "The Matrix"
+curl -X PUT http://{{host}}/movies/The%20Matrix \
+    -H 'Content-Type: application/json' \
+    -d '{
+        "title": "Garfield",
+        "director": "Peter Hewitt",
+        "year": 2004,
+        "rated": "PG",
+        "released": "11 Jun 2004"
+    }'
+
+
+### Get "The Matrix" by string
+curl -X GET http://{{host}}/movies/getByTitle/The%20Matrix
+
+### Test delete "Garfield" 
+curl -X DELETE http://{{host}}/movies/Garfield
+
+### Delete "The Matrix"
+curl -X DELETE http://{{host}}/movies/The%20Matrix
+
