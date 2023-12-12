@@ -1,13 +1,29 @@
 # k8s-playground
 Personal repository revolving around kubernetes (k8s). 
-My **on-premise** Kuberrnetes deployment configuration is detailed [here](./MyKubernetesConfiguration.md). 
 <br>
-<br>
-Kubernetes was never designed to be deployed on-premise, but thankfully there are third party components that mimic and replace the need for dedicated cloud components.  
+Kubernetes was never truly designed to be deployed on-premise, but thankfully there are third party components that mimic and replace the need for dedicated cloud components. My **on-premise** Kuberrnetes deployment configuration is detailed [here](./MyKubernetesConfiguration.md). 
 
-## File structure
+<details>
+<summary> What is Kubernetes? </summary>
 
-```
+> With my own interpretation...
+
+- Opensourced "borg"
+- Handling global scale services with 100% uptime
+- Scaling services to handle millions of transactions in different regions of the world
+- HPC (High Performance computing)
+
+- Iterating over docker and docker compose
+
+- Other applications? 
+
+</details>
+
+
+<details>
+<summary> Repository Structure</summary>
+
+```yaml
 .
 ├── go-endpoint                     # Standalone REST API test application
 ├── go-endpoint-mongodb             # Basic REST API that interacts with mongoDB
@@ -19,26 +35,25 @@ Kubernetes was never designed to be deployed on-premise, but thankfully there ar
 ├── MyKubernetesConfiguration.md
 └── README.md
 ```
+</details>
 
 ## Table of Contents
-- [k8s-playground](#k8s-playground)
+
+> Acknowledgement section covers any extra knowledge, articles and random thoughts. 
+
+
+- [k8s-playground](#k8s-playground) 
     - [Goal(s)](#goals)
     - [Work In Progress](#work-in-progress)
-- [What is Kubernetes?](#what-is-kubernetes)
 - [My Configured Kubernetes Overview](#the-result-overview)
     - [Visual Topology](#visual-topology)
     - [Nodes information output](#nodes-information-output)
 - [Basic Kubernetes feature testing](#basic-kubernetes-feature-testing) 
-    - [Kill pods](#kill-pods)
-    - [kill nodes](#kill-nodes)
-        - [kill worker node](#kill-a-worker-node)
-        - [kill control plane node](#kill-a-control-plane)
-        - [kill both worker and control plane node](#kill-both-a-control-plane-and-worker-node)
+    - [Self healing](#self-healing)
 - [Acknowledgements](#acknowledgements)
     - [Variations of k8s](#variations-of-k8s)
 - [Appendix](#appendix)
 
-> Acknowledgement section covers any extra knowledge, articles and random thoughts. 
 
 ## [Goal(s)](#table-of-contents) 
 - Deploy a stacked HA Kubernetes topology cluster via **kubeadm**  
@@ -54,53 +69,74 @@ Kubernetes was never designed to be deployed on-premise, but thankfully there ar
 - Proper Nginx Ingress controller and TLS/SSL termination  
 - Automated CI/CD setup with Jenkins 
 
-# [What is Kubernetes?](#table-of-contents)
-
-<br>
-<br>
-
-# [My Configured Kubernetes Overview](#table-of-contents) 
+## [My Configured Kubernetes Overview](#table-of-contents) 
 To show case what my current configuration is capable of 
 
-## Visual Topology 
-"Image"
+### Visual Topology 
 
-## Nodes information output
+<details open>
+<summary> Image </summary>
+
+![Kubernetes Visual Topology](/HAKubenertesTopology.jpg)
+</details>
+
+### Nodes information
 
 
-# [Basic Kubernetes feature testing](#table-of-contents)
+## [Basic Kubernetes feature testing](#table-of-contents)
 
-## Self-healing
+### [Self healing](#table-of-contents)
+
+<details>
+<summary> Kill Pods </summary>
+
 (gif)
-### kill pods
+</details>
+
+<details>
+<summary> Kill Nodes </summary>
+
 (gif)
+</details>
 
-### Kill nodes
+<details>
+<summary> Kill a Worker Node </summary>
 
-#### Kill a worker node 
 (gif)
+</details>
 
-#### Kill a control plane 
+<details>
+<summary> Kill a Control Plane </summary>
+
 (gif)
+</details>
 
-#### Kill both worker and control plane node
+<details>
+<summary> Kill a Control Plane and Worker Node </summary>
+
 (gif)
+</details>
 
+<br>
 
-
-
-# [Acknowledgements](#table-of-contents)
+## [Acknowledgements](#table-of-contents)
 
 As **kubeadm** is just a tool to create a minimum viable cluster. More in-depth configuration can be done as shown in [kelseyhightower ](https://github.com/kelseyhightower/kubernetes-the-hard-way ) and [mmumshad](https://github.com/mmumshad/kubernetes-the-hard-way) repository. 
 
 
-## Variations of k8s 
+### Dedicated OS
+[TalosOS](https://www.talos.dev/)
+
+
+### Variations of k8s 
 - minikube 
 - kind
 - k3s 
 - microk8s
 
-## k8s components
+### k8s components
+<details>
+
 - persistent storage 
 - namespaces
 - rbac 
@@ -114,13 +150,14 @@ As **kubeadm** is just a tool to create a minimum viable cluster. More in-depth 
 - Embedded local-path-provisioner
 - Host utilities (iptables, socat, etc)
 
+</details>
 
 
-[TalosOS](https://www.talos.dev/)
 
 
 
-# [Appendix](#table-of-contents)
+
+## [Appendix](#table-of-contents)
 
 Explaining the purpose of kubernetes
 https://dev.to/thenjdevopsguy/what-problem-is-kubernetes-actually-trying-to-solve-3g1n
@@ -137,10 +174,14 @@ https://inductor.medium.com/say-good-bye-to-haproxy-and-keepalived-with-kube-vip
 Explanation of kube-vip
 https://thebsdbox.co.uk/2020/01/02/Designing-Building-HA-bare-metal-Kubernetes-cluster/#Networking-load-balancing
 
-
 Explanation of multi-cluster kubernetes 
 https://traefik.io/glossary/understanding-multi-cluster-kubernetes/
 
 Examples of multi-cluster kubernetes configuration 
 https://www.kubecost.com/kubernetes-multi-cloud/kubernetes-multi-cluster/
+
+Kubernetes for Data Engineering 
+https://medium.com/@vladimir.prus/kubernetes-for-data-engineering-feba247f7585
+
+
 

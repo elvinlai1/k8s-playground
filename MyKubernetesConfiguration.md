@@ -1,41 +1,48 @@
 # Kubernetes Configuration
 This section will provide details regarding hardware and software configurations done to enable an ***on-premise*** **kubeadm** HA stacked etcd topology. 
 
-Proxmox Hypervisor server with each node as a Virtual Machine (VM) 
+<details>
+<summary> Visual Topology </summary> 
 
 (kubeadm HA topology stacked etcd images)
+</details>
 
-Refer to [documentation]( https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/high-availability/) for more detail on the requirements
+<br>
+
+Refer to [documentation]( https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/high-availability/) for more detail on the requirements.
 
 
 ## Table of Contents
-- [The Setup](#the-setup)
-	- [On-Premise Configuraiton]()
-	- [Network Configuration](#network-configuration)
-	- [Proxmox](#proxmox-hypervisor)
-		- [Node VM resource allocation configuration](#node-vm-resource-allocation-configuration)
-	- [Configuring HA Kubernetes Cluster](#configuring-ha-kubernetes-cluster)
-		- [1. Required configurations prior to installing Kubernetes](#1-required-configurations-prior-to-installing-kubernetes)
-		- [2. Reboot](#2-reboot)
-		- [3.Confirm Configs](#3-confirm-configs)
-		- [4. Installing Kubeadm kubelet and kubectl](#4-installing-kubeadm-kubelet-and-kubectl)
-		- [5. Create load balancer for kube apiserver](#5-create-load-balancer-for-kube-apiserver)
-			- [5. a. Pre-manifest generation configuration](#5a-pre-manifest-generation-configuration)
-		- [6. Initialise master control plane node](#6-initialise-master-control-plane-node)
-		- [7.Install the container network interface CNI](#7-install-the-container-network-interface-cni)
-		- [8. Deploy pods ](#8-deploy-pods)
-		- [9. Expose pods ](#9-expose-pods)
+
+- [On-Premise Configuraiton]()
+
+- [Configuring HA Kubernetes Cluster](#configuring-ha-kubernetes-cluster)
+	- [1. Required configurations prior to installing Kubernetes](#1-required-configurations-prior-to-installing-kubernetes)
+	- [2. Reboot](#2-reboot)
+	- [3. Confirm Configs](#3-confirm-configs)
+	- [4. Installing Kubeadm kubelet and kubectl](#4-installing-kubeadm-kubelet-and-kubectl)
+	- [5. Create load balancer for kube apiserver](#5-create-load-balancer-for-kube-apiserver)
+		- [5a. Pre-manifest generation configuration](#5a-pre-manifest-generation-configuration)
+	- [6. Initialise master control plane node](#6-initialise-master-control-plane-node)
+		- [6a. Post kubeadm initialisation](#6a-post-kubeadm-initialisation)
+	- [7. Install the container network interface CNI](#7-install-the-container-network-interface-cni)
+	- [8. Deploy pods ](#8-deploy-pods)
+	- [9. Expose pods ](#9-expose-pods)
 
 ## [On-Premise Configuration](#table-of-contents)
 
-## [Network Configuration](#table-of-contents) 
+## [Configuring HA Kubernetes cluster](#table-of-contents) 
+<details>
+<summary> Network Configuration </summary>
+
 VLAN: `30`\
 Subnet: `192.168.30.0/24`   
 DNS/Gateway handled by my router: `192.168.30.1` 
+</details>
 
-## [Proxmox Hypervisor](#table-of-contents)
+<details>
+<summary> Node / VM Configuration </summary>
 
-### Node VM resource allocation configuration  
 - Control node: 
 	- Ubuntu 22.04 
 	- 4 cores
@@ -48,14 +55,15 @@ DNS/Gateway handled by my router: `192.168.30.1`
 	- 4GB ram 
 	- 20GB storage
 	- VLAN `30`
+</details>
+<br>
 
-## [Configuring HA Kubernetes cluster](#table-of-contents) 
 Most of the required configurations are stated by the official kubernetes **kubeadm** installation documentation to reduce any errors during `kubeadm init` startup. 
 I have condensed the information corroborating with other sources to simplify the process below. 
 <br>
 As usual refer to [Documentation](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/) for more detail. 
 
-***Each node must have these base configuration prior to joining the first control-plane.***
+> Each node must have these base configuration prior to joining the first control-plane
 
 ### 1. Required configurations prior to installing Kubernetes 
 ```
@@ -95,6 +103,8 @@ This is the crucial step in order to achieve a HA stacked **etcd** k8s cluster.
 
 There are ways to handle this such as a **HAproxy** and **keepalived** combination to provide the required `LoadBalancer` and floating virtual IP (VIP) either on each of the control nodes themselves or a dedicated server. 
 
+<details>
+<summary>  </summary>
 **Explain purpose of VIP here**
 
 **Explain HAproxy**
@@ -102,6 +112,7 @@ There are ways to handle this such as a **HAproxy** and **keepalived** combinati
 **Explain Metallb** 
 
 **Explain GKE ingress** 
+</details>
 
 
 As I am configuring a HA cluster in a self-hosted environment I went with the Layer 2 **Kube-vip** ARP configuration to simplify the process and once configured the master node will auto propagate the configuration to other control-plane nodes as they come online. 
@@ -109,7 +120,7 @@ As I am configuring a HA cluster in a self-hosted environment I went with the La
 However, I do lose some declared functionality as I am deploying it as a pod
 > it can't make use of a variety of Kubernetes functionality (such as the Kubernetes token or ConfigMap resources)
 
-#### 5.a Pre-manifest generation configuration 
+#### 5a. Pre-manifest generation configuration 
 Refer to [Documentation](https://kube-vip.io/docs/installation/static/) on configuration and sequential startup details
 
 ```
@@ -152,7 +163,7 @@ sudo kubeadm init --control-plane-endpoint=192.168.30.50:6443 --pod-network-cidr
 `--upload certs` will generate the necessary flags and parameters for `kubeadm join...` to designate and connect the node as either control-plane or worker
 
 
-#### 6.a Post kubeadm initialisation
+#### 6a. Post kubeadm initialisation
 Test load balancer status
 `nc -v 192.168.30.50 6443` 
 
