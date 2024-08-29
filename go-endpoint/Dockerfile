@@ -19,7 +19,7 @@ RUN go mod tidy
 
 RUN go build -o /go-endpoint
 
-EXPOSE 8080
+EXPOSE 80
 
 CMD ["/go-endpoint"]
 

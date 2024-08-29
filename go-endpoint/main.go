@@ -21,8 +21,8 @@ func main() {
 
 	// Set up Gin router
 	router := gin.Default()
-	router.GET("/albums", getAlbums)
-	router.Run(":8080")
+	router.GET("/", getAlbums)
+	router.Run(":80")
 }
 
 func getAlbums(c *gin.Context) {

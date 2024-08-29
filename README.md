@@ -1,132 +1,29 @@
 # k8s-playground
-Personal repository revolving around kubernetes (k8s). 
-<br>
-Kubernetes was never truly designed to be deployed on-premise, but thankfully there are third party components that mimic and replace the need for dedicated cloud components. My **on-premise** Kuberrnetes deployment configuration is detailed [here](./MyKubernetesConfiguration.md). 
+> Personal repository revolving around kubernetes (k8s).
 
-<details>
-<summary> What is Kubernetes? </summary>
+**On-Premise Configuration**  [here](OnPremK8sCluster.md).
 
-> With my own interpretation...
-
-- Opensourced "borg"
-- Handling global scale services with 100% uptime
-- Scaling services to handle millions of transactions in different regions of the world
-- HPC (High Performance computing)
-
-- Iterating over docker and docker compose
-
-- Other applications? 
-
-</details>
+**Cloud Configuration** [WiP]
 
 
-<details>
-<summary> Repository Structure</summary>
-
-```yaml
-.
-├── go-endpoint                     # Standalone REST API test application
-├── go-endpoint-mongodb             # Basic REST API that interacts with mongoDB
-│   └── go-endpoint-mongodb.yaml        # Kubernetes deployment config 
-│   └── test-request.http               # Predefined requests to test endpoints 
-├── mongo                           # Kubernetes MongoDB and Mongo-express deployment configurations
-│   └──  docker-compose.yml             # For local device docker testing
-└── reference_yaml                  # Place to store yaml configs for reference
-├── MyKubernetesConfiguration.md
-└── README.md
-```
-</details>
-
-## Table of Contents
-
-> Acknowledgement section covers any extra knowledge, articles and random thoughts. 
-
-
-- [k8s-playground](#k8s-playground) 
-    - [Goal(s)](#goals)
-    - [Work In Progress](#work-in-progress)
-- [My Configured Kubernetes Overview](#the-result-overview)
-    - [Visual Topology](#visual-topology)
-    - [Nodes information output](#nodes-information-output)
-- [Basic Kubernetes feature testing](#basic-kubernetes-feature-testing) 
-    - [Self healing](#self-healing)
-- [Acknowledgements](#acknowledgements)
-    - [Variations of k8s](#variations-of-k8s)
-- [Appendix](#appendix)
-
-
-## [Goal(s)](#table-of-contents) 
-- Deploy a stacked HA Kubernetes topology cluster via **kubeadm**  
+### Goal(s)
+- Deploy a stacked High Availability Kubernetes cluster via **kubeadm**  
 - Create custom manifest to deploy custom `go-endpoint-mongodb` pods to interact with mongoDB 
 - Conduct basic stress and load tests to see how kubernete's features work
 - Document the knowledge and configurations in a self-hosted environment for future reference
 
-## [Work In Progress](#table-of-contents) 
+### Work In Progress
 - Load and Stress testing to understand kubernete's automated system
-- Prometheus configuration monitoring 
+- Prometheus configuration monitoring
 - Configuring Storage Orchestration
     - Persistent Volume Claim (PVC) --> Persistent Volume (PV)
 - Proper Nginx Ingress controller and TLS/SSL termination  
-- Automated CI/CD setup with Jenkins 
-
-## [My Configured Kubernetes Overview](#table-of-contents) 
-To show case what my current configuration is capable of 
-
-### Visual Topology 
-
-<details open>
-<summary> Image </summary>
-
-![Kubernetes Visual Topology](/HAKubenertesTopology.jpg)
-</details>
-
-### Nodes information
+- Automated CI/CD setup with Github actions/Jenkins
 
 
-## [Basic Kubernetes feature testing](#table-of-contents)
-
-### [Self healing](#table-of-contents)
-
-<details>
-<summary> Kill Pods </summary>
-
-(gif)
-</details>
-
-<details>
-<summary> Kill Nodes </summary>
-
-(gif)
-</details>
-
-<details>
-<summary> Kill a Worker Node </summary>
-
-(gif)
-</details>
-
-<details>
-<summary> Kill a Control Plane </summary>
-
-(gif)
-</details>
-
-<details>
-<summary> Kill a Control Plane and Worker Node </summary>
-
-(gif)
-</details>
-
-<br>
-
-## [Acknowledgements](#table-of-contents)
-
-As **kubeadm** is just a tool to create a minimum viable cluster. More in-depth configuration can be done as shown in [kelseyhightower ](https://github.com/kelseyhightower/kubernetes-the-hard-way ) and [mmumshad](https://github.com/mmumshad/kubernetes-the-hard-way) repository. 
-
-
+## References
 ### Dedicated OS
-[TalosOS](https://www.talos.dev/)
-
+- [TalosOS](https://www.talos.dev/)
 
 ### Variations of k8s 
 - minikube 
@@ -135,12 +32,9 @@ As **kubeadm** is just a tool to create a minimum viable cluster. More in-depth 
 - microk8s
 
 ### k8s components
-<details>
-
 - persistent storage 
 - namespaces
 - rbac 
-
 - containerd
 - Flannel (CNI)
 - CoreDNS
@@ -150,14 +44,7 @@ As **kubeadm** is just a tool to create a minimum viable cluster. More in-depth 
 - Embedded local-path-provisioner
 - Host utilities (iptables, socat, etc)
 
-</details>
-
-
-
-
-
-
-## [Appendix](#table-of-contents)
+### Articles
 
 Explaining the purpose of kubernetes
 https://dev.to/thenjdevopsguy/what-problem-is-kubernetes-actually-trying-to-solve-3g1n
