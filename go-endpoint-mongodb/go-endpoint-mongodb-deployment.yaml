@@ -14,10 +14,9 @@ spec:
     spec:
       containers:
       - name: go-endpoint-mongodb
-        image: laielvin0/go-endpoint-mongodb:latest
+        image: laielvin0/go-endpoint-mongodb:1.14
         ports: 
-        - containerPort: 80
-
+        - containerPort: 8080
 ---
 apiVersion: v1
 kind: Service
@@ -29,6 +28,5 @@ spec:
     app: go-endpoint-mongodb
   ports:
     - protocol: TCP
-      port: 80
-      targetPort: 80
-
+      port: 8080
+      targetPort: 8080

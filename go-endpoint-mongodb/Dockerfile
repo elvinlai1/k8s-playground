@@ -1,6 +1,7 @@
-FROM golang:1.21-alpine AS builder
+FROM golang:1.22-alpine AS builder
 
 WORKDIR /app
+COPY .env ./
 COPY go.mod go.sum ./
 RUN apk add --no-cache ca-certificates && go mod download
 COPY *.go ./
@@ -9,7 +10,8 @@ RUN go build -o /go-endpoint-mongodb
 
 FROM alpine:latest
 COPY --from=builder /go-endpoint-mongodb /go-endpoint-mongodb
-EXPOSE 80
+COPY --from=builder /app/.env .
+EXPOSE 8080
 
 CMD ["/go-endpoint-mongodb"]
 

@@ -1,6 +1,6 @@
 ### Executed with REST Client Extension for VS Code or can be executed with cURL manually
 
-@hostname = localhost
+@hostname = 192.168.30.54
 @port = 8080
 @host = {{hostname}}:{{port}}
 
