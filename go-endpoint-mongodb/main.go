@@ -23,7 +23,7 @@ func main() {
 	router.DELETE("/movies/:id", deleteMovie)
 	router.DELETE("/movies/all", removeAllMovies)
 
-	err := router.Run(":8080")
+	err := router.Run(":80")
 	if err != nil {
 		fmt.Println(err)
 	}

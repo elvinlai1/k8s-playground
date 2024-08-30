@@ -241,7 +241,7 @@ kubectl apply -f https://raw.githubusercontent.com/flannel-io/flannel/master/Doc
 </details>
 
 
-### 9. Install On-premise Kube-vip Cloud Provider 
+### 9. Install On-premise Kube-vip Cloud Provider
 
 <details open>
 

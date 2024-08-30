@@ -1,26 +1,14 @@
-# syntax=docker/dockerfile:1
-
-FROM golang:1.21
-
-ENV GO111MODULE=on \
-    CGO_ENABLED=0 \
-    GOOS=linux \
-    GOARCH=amd64
+FROM golang:1.21-alpine AS builder
 
 WORKDIR /app
-
 COPY go.mod go.sum ./
-
-RUN go mod download
-
+RUN apk add --no-cache ca-certificates && go mod download
 COPY *.go ./
-
 RUN go mod tidy
-
 RUN go build -o /go-endpoint
 
+FROM alpine:latest
+COPY --from=builder /go-endpoint /go-endpoint
 EXPOSE 80
 
 CMD ["/go-endpoint"]
-
-

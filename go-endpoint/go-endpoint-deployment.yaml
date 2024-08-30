@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: go-endpoint
-        image: laielvin0/go-endpoint:1.1
+        image: laielvin0/go-endpoint:latest
         ports: 
         - containerPort: 80
 ---
